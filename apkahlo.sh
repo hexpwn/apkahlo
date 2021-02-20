@@ -152,7 +152,7 @@ fi
 
 rm -rf repackaged repackaged_tmp.apk custom.keystore
 
-printf "\n ----- ALL DONE! -----"
-printf "Enjoy your new APK! You can install it with:\n"
-printf "adb install repackaged.apk\n"
+printf "\n\e[1;32;40m ---------======= ALL DONE! =======---------\e[0m\n"
+printf "\e[1;32;40mEnjoy your new APK! You can install it with:\e[0m\n"
+printf "\e[1;33;40m         adb install repackaged.apk         \e[0m\n"
 exit 0
