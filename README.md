@@ -39,3 +39,4 @@ If you are lost on what injecting `frida-gadget` is all about, check this blog p
 - Allow user to give his own certificate to sign the APK
 - More control options (e.g. no useless logging information)
 - Work with split APKs
+- Validate that the dependencies exist before running
