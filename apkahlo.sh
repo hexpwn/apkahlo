@@ -73,7 +73,7 @@ if [ ! -d repackaged ]; then
 fi
 
 # Try finding the entrypoint in the smali code to inject the frida-gadget call
-ENTRY=$(find . -name "MainActivity.smali")
+ENTRY=$(find repackaged -name "MainActivity.smali")
 
 if [ ! "$ENTRY" == "" ]; then
 	printf "\n$SUCC Found APK entrypoint at: %s\n" "$ENTRY"
