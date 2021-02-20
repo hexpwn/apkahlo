@@ -111,15 +111,16 @@ fi
 
 # Copying libfridagadget to the correct folder in the APK
 if [ ! -d repackaged/lib/arm64-v8a/ ]; then
-	printf "\n$ERROR I could not find the correct directory to put libfridagadget\n"
-	printf "       Please check if ./repackaged/lib/arm64-v8a exists.\n"
+	printf "\n$SUCC I could not find the correct directory to put libfridagadget\n"
+	printf "       I will create it now.\n"
+	mkdir -p repackaged/lib/arm64-v8a/
+fi
+
+cp "$FRIDA" repackaged/lib/arm64-v8a/libfrida-gadget.so
+
+if [ $? -ne 0 ]; then
+	printf "\n$ERROR Error copying the libfridagadget\n"
 	exit 2
-else
-	cp "$FRIDA" repackaged/lib/arm64-v8a/libfrida-gadget.so
-	if [ $? -ne 0 ]; then
-		printf "\n$ERROR Error copying the libfridagadget\n"
-		exit 2
-	fi
 fi
 
 # Repackage the APK
