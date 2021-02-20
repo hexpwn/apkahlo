@@ -76,8 +76,7 @@ fi
 ENTRY=$(find . -name "MainActivity.smali")
 
 if [ ! "$ENTRY" == "" ]; then
-	printf "\n$SUCC Found APK entrypoint at: %s\n", "$ENTRY"
-	exit 0
+	printf "\n$SUCC Found APK entrypoint at: %s\n" "$ENTRY"
 	printf "\n$SUCC Injecting a call to frida-gadget.so\n"
 	sed "/.method public constructor <init>()V/a     const-string v0, \
 \"frida-gadget\"\n    \
