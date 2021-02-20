@@ -78,9 +78,8 @@ ENTRY=$(find repackaged -name "MainActivity.smali")
 if [ ! "$ENTRY" == "" ]; then
 	printf "\n$SUCC Found APK entrypoint at: %s\n" "$ENTRY"
 	printf "\n$SUCC Injecting a call to frida-gadget.so\n"
-	sed "/.method public constructor <init>()V/a     const-string v0, \
-\"frida-gadget\"\n    \
-invoke-static {v0}, \
+	sed "/.method protected onCreate(Landroid/a    \
+const-string v0,\"frida-gadget\"\n    invoke-static {v0}, \
 Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V" "$ENTRY" > temp_smali.smali
 	if [ $? -ne 0 ]; then
 		printf "\n$ERROR I failed at finding the APK entrypoint, I cannot\
