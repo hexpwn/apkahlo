@@ -3,6 +3,16 @@ This is a simple bash script that will (hopefully) help with repackaging an APK 
 
 If you are lucky it will work out of the box and you'll have a repackaged APK which is ready to be installed and interacted with `frida`.
 
+![](demo.gif)
+
+
+# How to use
+
+Make `apkahlo` an executable with `chmod +x apkahlo.sh`
+
+Run with `./apkahlo.sh <target_apk> <libfrida-gadget.so>`
+
+**Atention:** `libfrida-gadget.so` must be for ARMv8 target 
 
 
 # Dependencies
@@ -14,13 +24,6 @@ I tried to simplify this script, using only tools that any Android reverser alre
 - libfridagadget.so - Available at https://github.com/frida/frida/releases
 - android-sdk-build-tools - https://developer.android.com/studio/releases/build-tools
 
-
-
-# How to use
-
-`apkahlo <target_apk> <libfrida-gadget.so>`
-
-`libfrida-gadget.so` **must be for ARMv8 target** 
 
 ### Options (you don't have many):
 
