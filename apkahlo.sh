@@ -39,8 +39,8 @@ usage () {
 
 # Check if the necessary arguments were passed
 if [ $# -lt 1 ]; then
-	usage
-	exit 2
+       usage
+       exit 2
 else
 	# You can cancel the banner with the -b flag
 	if [ ! "$1" == -b ]; then
@@ -93,6 +93,22 @@ else
 	printf "\n$ERROR I failed at finding the APK entrypoint, I cannot\
  inject frida-gadget.so without knowing this information... sorry...\n"
 	exit 2
+fi
+
+# Set the APK to debuggable
+APP_ENTRY=$(grep "<application" repackaged/AndroidManifest.xml)
+DEBUG_F=$(echo $APP_ENTRY | grep 'android:debuggable="false"')
+DEBUG_T=$(echo $APP_ENTRY | grep 'android:debuggable="true"')
+
+if [ ! "$DEBUG_T" == "" ]; then
+	printf "\n$SUCC App is already set as DEBUGGABLE :D\n"
+elif [ ! "$DEBUG_F" == "" ]; then
+	printf "\n$SUCC App is marked as non-debuggable... changing that ;)\n"
+	sed -i 's/android:debuggable="false"/android:debuggable="true"/' repackaged/AndroidManifest.xml
+else
+	printf "\n$SUCC Setting app to DEBUGGABLE 8]\n"
+	NEW_APP_ENTRY=$(echo $APP_ENTRY | sed 's/>/ android:debuggable="true">/')	
+	sed -i "s|$(echo $APP_ENTRY)|$(echo $NEW_APP_ENTRY)|" repackaged/AndroidManifest.xml
 fi
 
 # Check for an existing signed certificate
