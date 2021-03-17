@@ -2,8 +2,8 @@
 
 # ---------------------------------------------------------------------------#
 # Source: https://github.com/hexpwn/APKahlo
-# Version: 0.1 - "It Probably Won't Work"
-# Date: 2021-02-20
+# Version: 0.2 - "It (still) Probably Won't Work"
+# Date: 2021-03-17
 #
 # This is a simple bash script that will (hopefully) help with repackaging an 
 # APK with Frida Gadget
@@ -28,7 +28,7 @@ printf '   d8b Y8b    888 888D 888 8P   ,"Y88b 888 ee  888  e88 88e \n'
 printf '  d888b Y8b   888 88"  888 K   "8" 888 888 88b 888 d888 888b \n'
 printf ' d888888888b  888      888 8b  ,ee 888 888 888 888 Y888 888P \n'
 printf 'd8888888b Y8b 888      888 88b "88 888 888 888 888  "88 88"  \n'
-printf "            v0.1 \"It Probably Won't Work\" -  \e[0m\e[31mby @hexpwn\e[0m"
+printf "        v0.2 \"It (still) Probably Won't Work\" -  \e[0m\e[31mby @hexpwn\e[0m"
 printf "\n";
 }
 
@@ -72,8 +72,29 @@ if [ ! -d repackaged ]; then
 	fi
 fi
 
+printf "\n$SUCC I need to know the app's entrypoint. I can Guess [default] or you can\
+Customize and tell me where I should insert it...\n\n"
+PS3="Choice: "
+choice=("Customize" "Guess [default]")
+select ch in "${choice[@]}"; do
+	    case $ch in
+			"Customize")
+			echo
+			read -p "What is the name of the .smali file that constains the onCreate() entrypoint? " smali_name
+			break
+			;;
+
+			"Guess [default]")
+				smali_name="MainActivity.smali"
+				break
+			;;
+
+		*) smali_name="MainActivity.smali";;
+	esac
+done
+
 # Try finding the entrypoint in the smali code to inject the frida-gadget call
-ENTRY=$(find repackaged -name "MainActivity.smali")
+ENTRY=$(find repackaged -name "$smali_name")
 
 if [ ! "$ENTRY" == "" ]; then
 	printf "\n$SUCC Found APK entrypoint at: %s\n" "$ENTRY"
