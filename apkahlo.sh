@@ -93,13 +93,15 @@ select ch in "${choice[@]}"; do
 	esac
 done
 
+echo "Chosen smali is: $smali_name"
+
 # Try finding the entrypoint in the smali code to inject the frida-gadget call
 ENTRY=$(find repackaged -name "$smali_name")
 
 if [ ! "$ENTRY" == "" ]; then
 	printf "\n$SUCC Found APK entrypoint at: %s\n" "$ENTRY"
 	printf "\n$SUCC Injecting a call to frida-gadget.so\n"
-	sed "/.method protected onCreate(Landroid/a    \
+	sed "/ onCreate(Landroid/a    \
 const-string v0,\"frida-gadget\"\n    invoke-static {v0}, \
 Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V" "$ENTRY" > temp_smali.smali
 	if [ $? -ne 0 ]; then
